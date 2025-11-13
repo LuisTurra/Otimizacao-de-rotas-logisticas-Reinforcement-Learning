@@ -1,0 +1,7 @@
+gradio
+pandas
+numpy
+geopy
+folium
+matplotlib
+scikit-learn
