@@ -1,4 +1,3 @@
-# app.py
 import gradio as gr
 import folium
 import pandas as pd
@@ -7,30 +6,19 @@ import os
 from environment import SupplyChainEnv
 from qlearning_agent import QLearningAgent
 
-# =============================================
-# CONFIGURAÇÃO
-# =============================================
 Q_TABLE_PATH = "q_table.pkl"
 DQN_MODEL_PATH = "dqn_model.pt"
 CSV_PATH = "data/sao_paulo_nodes.csv"
 
-# =============================================
-# CARREGA CSV
-# =============================================
-# if not os.path.exists(CSV_PATH):
-#     raise FileNotError(f"CSV não encontrado: {CSV_PATH}")
 
 df = pd.read_csv(CSV_PATH)
 print(f"CSV carregado: {len(df)} linhas")
 
-# =============================================
-# Q-LEARNING: MÁX 10 CLIENTES
-# =============================================
 max_ql = min(11, len(df))
 df_ql = df.head(max_ql)
 depot = df_ql.iloc[0].copy()
 depot['demand'] = 0
-locations_ql = df_ql.iloc[1:].to_dict('records')  # CORRIGIDO
+locations_ql = df_ql.iloc[1:].to_dict('records')  
 n_clients_ql = len(locations_ql)
 
 print(f"[Q-Learning] Usando {n_clients_ql} clientes")
@@ -46,14 +34,11 @@ if os.path.exists(Q_TABLE_PATH):
 else:
     print("AVISO: q_table.pkl não encontrado.")
 
-# =============================================
-# DQN: MÁX 50 CLIENTES
-# =============================================
 max_dqn = min(51, len(df))
 df_dqn = df.head(max_dqn)
 depot_dqn = df_dqn.iloc[0].copy()
 depot_dqn['demand'] = 0
-locations_dqn = df_dqn.iloc[1:].to_dict('records')  # CORRIGIDO
+locations_dqn = df_dqn.iloc[1:].to_dict('records')  
 n_clients_dqn = len(locations_dqn)
 
 print(f"[DQN] Usando {n_clients_dqn} clientes")
@@ -70,9 +55,6 @@ if os.path.exists(DQN_MODEL_PATH):
 else:
     print("AVISO: dqn_model.pt não encontrado.")
 
-# =============================================
-# FUNÇÃO DQN
-# =============================================
 def run_dqn():
     if not dqn_agent:
         return "ERRO: dqn_model.pt não encontrado.", None, None
@@ -92,7 +74,7 @@ def run_dqn():
         next_state, reward, done, info = local_env.step(action)
         state_vec = np.array([local_env.current_idx] + list(local_env.remaining_demand))
 
-        # Cálculo do custo
+        
         if len(local_env.route_positions) > 1:
             prev = local_env.route_positions[-2]
             curr = local_env.route_positions[-1]
@@ -103,7 +85,7 @@ def run_dqn():
         demand = local_env.original_demands[action] if action < local_env.n_locations else 0
         total_cost += dist * 1.5 + demand * 0.8
 
-        # Entrega feita
+        
         if action < local_env.n_locations and local_env.remaining_demand[action] == 0:
             loc = local_env.locations[action]
             route_data.append({'name': loc['name'], 'demand': loc['demand'], 'ordem': len(route_data)})
@@ -115,9 +97,6 @@ def run_dqn():
 
     return build_output(local_env, total_cost, route_data, "DQN", steps, deliveries, n_clients_dqn)
 
-# =============================================
-# FUNÇÃO Q-LEARNING
-# =============================================
 def run_qlearning():
     if not ql_agent:
         return "ERRO: q_table.pkl não encontrado.", None, None
@@ -159,9 +138,6 @@ def run_qlearning():
 
     return build_output(local_env, total_cost, route_data, "Q-Learning", steps, deliveries, n_clients_ql)
 
-# =============================================
-# FUNÇÃO COMUM
-# =============================================
 def build_output(env, total_cost, route_data, method, steps, deliveries, total_clients):
     route_df = pd.DataFrame(route_data)
     route_df = route_df[['ordem', 'name', 'demand']].rename(columns={'ordem': 'Ordem', 'name': 'Local', 'demand': 'Demanda'})
@@ -187,9 +163,6 @@ def build_output(env, total_cost, route_data, method, steps, deliveries, total_c
         route_df, map_html
     )
 
-# =============================================
-# EXPLICAÇÃO
-# =============================================
 def show_explanation():
     return """
 ### **DQN vs Q-Learning**
@@ -202,10 +175,7 @@ def show_explanation():
 
 **Clique nos botões para ver!**
 """
-
-# =============================================
-# GRADIO
-# =============================================
+#Gradio
 with gr.Blocks(title="SupplyChain: DQN vs Q-Learning", theme=gr.themes.Soft()) as demo:
     gr.Markdown("# SupplyChain Optimizer")
     gr.Markdown("### Q-Learning (pequeno) vs DQN (grande)")

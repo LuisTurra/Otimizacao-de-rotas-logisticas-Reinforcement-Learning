@@ -22,7 +22,7 @@ class QLearningAgent:
         if random.random() < self.epsilon:
             return random.choice(valid_actions)
 
-        # Q-values pros válidos
+        
         q_vals = [self.q_table[(state, a)] for a in range(self.n_actions)]
         max_q = max(q_vals[a] for a in valid_actions)
         candidates = [a for a in valid_actions if q_vals[a] == max_q]

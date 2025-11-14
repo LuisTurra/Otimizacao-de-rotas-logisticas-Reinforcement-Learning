@@ -1,4 +1,3 @@
-# dqn_agent.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -47,7 +46,7 @@ class DQNAgent:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Usando dispositivo: {self.device}")
 
-        # Redes
+        
         self.q_network = DQN(state_size, action_size).to(self.device)
         self.target_network = DQN(state_size, action_size).to(self.device)
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -94,7 +93,7 @@ class DQNAgent:
         loss.backward()
         self.optimizer.step()
 
-        # Decay epsilon
+        
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 

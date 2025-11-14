@@ -75,7 +75,7 @@ class SupplyChainEnv:
                 self.route_positions.append(self.depot)
                 done = np.all(self.remaining_demand <= 0)
 
-        # Timeout
+        
         if self.steps >= self.max_steps:
             reward -= 100
             done = True
