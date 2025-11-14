@@ -1,7 +1,5 @@
 gradio
-pandas
-numpy
-geopy
 folium
-matplotlib
-scikit-learn
+geopy
+pandas
+torch
