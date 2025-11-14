@@ -5,19 +5,22 @@
 
 > **Compare dois algoritmos de Reinforcement Learning em tempo real: Q-Learning (pequeno) vs DQN (escala real)**
 
----
+----------------------------------
 
+**Demo Live** - https://huggingface.co/spaces/luisturra/otimizacao_supplaychain
+**Acesse meu portfolio** - https://luisturra.github.io/MyPortfolio
+-----------------------------------------------------------------------------
 ## Funcionalidades
 
 - **2 Algoritmos em 1 App**:
-  - **Q-Learning**: até 10 clientes
+  - **Q-Learning**: até **10 clientes**
   - **DQN (Deep Q-Network)**: até **50+ clientes**
-- **Custo otimizado**: `distância × R$ 1,50/km + demanda × R$ 0,80/unidade`
+- **Custo otimizado**: distância × R$ 1,50/km + demanda × R$ 0,80/unidade
 - **Mapa interativo** com Folium (linhas + popups)
 - **Interface Gradio** com 3 botões:
-  - `DQN (Grande)`
-  - `Q-Learning (Pequeno)`
-  - `?` → explicação didática
+  - **DQN (Grande)**
+  - **Q-Learning (Pequeno)**
+  - ****?** - explicação didática
 - **Escalável** com `min()` → funciona com qualquer tamanho de CSV
 - **Deploy no Hugging Face Spaces** (gratuito)
 
@@ -26,26 +29,26 @@
 ## Resultados Reais (CSV com 20 nós)
 
 | Algoritmo     | Clientes | Entregas | Custo Total | Passos |
-|---------------|---------|----------|-------------|--------|
-| **Q-Learning** | 10      | 10/10    | **R$ 1.250** | 11     |
-| **DQN**        | 19      | 19/19    | **R$ 2.980** | 20     |
+|---------------|----------|----------|-------------|--------|
+| **Q-Learning** | 10      | 10/10    | **R$ 1.250** | 11    |
+| **DQN**        | 19      | 19/19    | **R$ 2.980** | 20    |
 
 > **DQN escala 5x mais com custo proporcional — ideal para logística real.**
 
----
+-------------------------------------------------------------------------------
 
 ## Tech Stack
 
 | Tecnologia     | Uso |
-|----------------|-----|
-| `Python`       | Lógica |
-| `Gradio`       | Interface web |
-| `Folium`       | Mapa interativo |
-| `Geopy`        | Cálculo de distância |
-| `Pandas`       | Leitura do CSV |
-| `PyTorch`      | DQN (rede neural) |
-| `Q-Learning`   | Tabela de valores |
-| `DQN`          | Rede neural profunda |
+|----------------|-----------------------|
+| `Python`       | Lógica                |
+| `Gradio`       | Interface web         |
+| `Folium`       | Mapa interativo       |
+| `Geopy`        | Cálculo de distância  |
+| `Pandas`       | Leitura do CSV        |
+| `PyTorch`      | DQN (rede neural)     |
+| `Q-Learning`   | Tabela de valores     |
+| `DQN`          | Rede neural profunda  |
 
 ---
 
